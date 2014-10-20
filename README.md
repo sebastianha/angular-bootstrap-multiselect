@@ -44,6 +44,7 @@ $ karma start
 ### License
 
 Copyright (c) 2014 Sebastian Hammerl, Getslash GmbH
+
 Copyright (c) 2014 Amitava Saha
 
 Licensed under the MIT License
