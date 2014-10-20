@@ -20,11 +20,11 @@ $ bower install angular-bootstrap-multiselect --save
 Add "ui.multiselect" to your modules list. Then you can use it like follows:
 
 ```
-<pwgen
-    ng-model="passwordModel"
-    length="20"                 (Optional)
-    placeholder="Password"      (Optional)
-></pwgen>
+<multiselect
+    ng-model="multiselectModel"
+    options="c for c in multiselectOptions"
+    data-multiple="true">
+</multiselect>
 ```
 
 See index.html for examples and how it works.
