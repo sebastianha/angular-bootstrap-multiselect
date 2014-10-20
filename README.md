@@ -1,13 +1,49 @@
-angular-multiselect
-===================
+angular-bootstrap-multiselect
+==========================
 
-Native AngularJS multiselect directive - Work in progress. Contributions welcome!
+Bootstrap styled multiselect directive for AngularJS
 
-Example: http://plnkr.co/edit/LPGYIf?p=preview
+Screenshot:
 
-Custom template example: http://plnkr.co/edit/MKhohf?p=preview
+![Screenshot](/multiselect.png?raw=true "Screenshot")
 
+Originally created by Amitava Saha (https://github.com/amitava82/angular-multiselect)
 
-License
-=======
-The MIT License
+### Installation via Bower:
+
+```
+$ bower install angular-bootstrap-multiselect --save
+```
+
+### Usage:
+
+Add "ui.multiselect" to your modules list. Then you can use it like follows:
+
+```
+<pwgen
+    ng-model="passwordModel"
+    length="20"                 (Optional)
+    placeholder="Password"      (Optional)
+></pwgen>
+```
+
+See index.html for examples and how it works.
+
+### Testing:
+
+Start web server e.g. via Python:
+```
+$ python -m SimpleHTTPServer 8000
+```
+
+Start Karma E2E tests (has to be installed globally before):
+```
+$ karma start
+```
+
+### License
+
+Copyright (c) 2014 Sebastian Hammerl, Getslash GmbH
+Copyright (c) 2014 Amitava Saha
+
+Licensed under the MIT License

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="angular-bootstrap-multiselect.js"></script>
+	<script src="app.js"></script>
+</head>
+<body ng-app="angular-bootstrap-multiselect-test" ng-controller="index">
+<div class="container">
+	<div class="row">
+
+		<h3>Single select</h3>
+		<multiselect ng-model="multiselectModel[0]" options="c for c in multiselectOptions" data-multiple="false"></multiselect>
+		<br><br>
+		Model: <span ng-bind="multiselectModel[0]"></span>
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[0]"
+    options="c for c in multiselectOptions"
+    data-multiple="false"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Multi select</h3>
+		<multiselect ng-model="multiselectModel[1]" options="c for c in multiselectOptions" data-multiple="true"></multiselect>
+		<br><br>
+		Model: <span ng-bind="multiselectModel[1]"></span>
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[0]"
+    options="c for c in multiselectOptions"
+    data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>app.js:</h3>
+			<pre>
+angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).controller("index", function($scope) {
+    $scope.multiselectModel = ["", []];
+    $scope.multiselectOptions = [
+        "Apples",
+        "Bananas",
+        "Peaches"
+    ];
+});
+</pre>
+
+	</div>
+</div>
+</body>
+</html>

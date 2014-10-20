@@ -1,19 +1,35 @@
 {
-  "name": "amitava82/angular-multiselect",
-  "version": "1.0.0",
-  "main": "src/multiselect.js",
-  "description": "Native AngularJS multiselect directive",
-  "license": "MIT",
-  "ignore": [
-    ".jshintrc",
-    "**/*.txt"
-  ],
-  "dependencies": {
-    "angular": ">=1.0.4"
-  },
-  "keywords": [
-    "angularjs",
-    "multiselect",
-    "select"
-  ]
+	"name": "angular-bootstrap-multiselect",
+	"version": "0.1.0",
+	"authors": [
+		"Sebastian Hammerl, Getslash GmbH",
+		"Amitava Saha"
+	],
+	"description": "A Twitter Bootstrap styled multiselect dropdown list to use with AngularJS",
+	"main": [
+		"angular-bootstrap-multiselect.js"
+	],
+	"keywords": [
+		"angular",
+		"angularjs",
+		"bootstrap",
+		"select",
+		"multi",
+		"multiselect",
+		"dropdown",
+		"input"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components"
+	],
+	"dependencies": {
+		"angular": ">= 1.2.0",
+		"bootstrap": ">= 3.0.0"
+	},
+	"devDependencies": {
+		"angular-scenario": ">= 1.2.0"
+	}
 }
