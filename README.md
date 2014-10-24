@@ -1,7 +1,7 @@
 angular-bootstrap-multiselect
 ==========================
 
-Bootstrap styled multiselect directive for AngularJS
+A multiselect dropdown list for AngularJS styled to fit the Twitter Bootstrap standard design
 
 Screenshot:
 
@@ -27,7 +27,7 @@ Add "ui.multiselect" to your modules list. Then you can use it like follows:
 </multiselect>
 ```
 
-See index.html for examples and how it works.
+See index.html and app.js for examples and how it works.
 
 ### Testing:
 
