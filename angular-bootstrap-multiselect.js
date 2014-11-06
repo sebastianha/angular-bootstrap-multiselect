@@ -294,9 +294,9 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"  <button type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
 			"    {{header}} <span class=\"caret\"></span>\n" +
 			"  </button>\n" +
-			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;\">\n" +
+			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\">\n" +
 			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items\">\n" +
-			"      <a ng-click=\"select($event, i)\">\n" +
+			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
 			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
 			"    </li>\n" +
 			"  </ul>\n" +
