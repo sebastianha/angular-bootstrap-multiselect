@@ -32,6 +32,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var exp = attrs.options;
 				var parsedResult = optionParser.parse(exp);
 				var isMultiple = attrs.multiple ? true : false;
+				var compareByKey = attrs.compareBy;
 				var required = false;
 				var scope = originalScope.$new();
 				var changeHandler = attrs.change || angular.noop;
@@ -149,6 +150,10 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 							return false;
 						}
 					}
+					if(compareByKey !== undefined && obj[compareByKey] !== undefined) {
+						return false;
+					}
+
 					return true;
 				}
 
@@ -198,7 +203,9 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					if(!angular.isArray(newVal)) {
 						angular.forEach(scope.items, function(item) {
 							item.checked = false;
-							if(angular.equals(item.model, newVal)) {
+							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
+								item.checked = true;
+							} else if(compareByKey !== undefined && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
 								item.checked = true;
 							}
 						});
@@ -206,7 +213,9 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 						angular.forEach(scope.items, function(item) {
 							item.checked = false;
 							angular.forEach(newVal, function(i) {
-								if(angular.equals(item.model, i)) {
+								if(compareByKey === undefined && angular.equals(item.model, i)) {
+									item.checked = true;
+								} else if(compareByKey !== undefined && angular.equals(item.model[compareByKey], i[compareByKey])) {
 									item.checked = true;
 								}
 							});

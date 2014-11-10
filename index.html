@@ -13,37 +13,195 @@
 	<div class="row">
 
 		<h3>Single select</h3>
-		<multiselect ng-model="multiselectModel[0]" options="c for c in multiselectOptions" data-multiple="false"></multiselect>
+		<multiselect ng-model="singleselectModel[0]" options="c for c in selectOptions" data-multiple="false"></multiselect>
 		<br><br>
-		Model: <span ng-bind="multiselectModel[0]"></span>
+		Model: {{singleselectModel[0]}}
 		<br><br>
 		<pre>&lt;multiselect
-    ng-model="multiselectModel[0]"
-    options="c for c in multiselectOptions"
+    ng-model="singleselectModel[0]"
+    options="c for c in selectOptions"
     data-multiple="false"
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
-		<h3>Multi select</h3>
-		<multiselect ng-model="multiselectModel[1]" options="c for c in multiselectOptions" data-multiple="true"></multiselect>
+		<h3>Single select pre-selection</h3>
+		<multiselect ng-model="singleselectModel[1]" options="c for c in selectOptions" data-multiple="false"></multiselect>
 		<br><br>
-		Model: <span ng-bind="multiselectModel[1]"></span>
+		Model: {{singleselectModel[1]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[1]"
+    options="c for c in selectOptions"
+    data-multiple="false"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select with objects</h3>
+		<multiselect ng-model="singleselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="false"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[2]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[2]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="false"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select pre-selection compare by object</h3>
+		<multiselect ng-model="singleselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="false"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[3]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[3]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="false"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select pre-selection compare by id</h3>
+		<multiselect ng-model="singleselectModel[4]" options="c.name for c in selectOptionsObjects" data-multiple="false" data-compare-by="id"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[4]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[4]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="false"
+    data-compare-by="id"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+
+
+		<h3>Multi select</h3>
+		<multiselect ng-model="multiselectModel[0]" options="c for c in selectOptions" data-multiple="true"></multiselect>
+		<br><br>
+		Model: {{multiselectModel[0]}}
 		<br><br>
 		<pre>&lt;multiselect
     ng-model="multiselectModel[0]"
-    options="c for c in multiselectOptions"
+    options="c for c in selectOptions"
     data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Multi select pre-selection</h3>
+		<multiselect ng-model="multiselectModel[1]" options="c for c in selectOptions" data-multiple="true"></multiselect>
+		<br><br>
+		Model: {{multiselectModel[1]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[1]"
+    options="c for c in selectOptions"
+    data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select with objects</h3>
+		<multiselect ng-model="multiselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="true"></multiselect>
+		<br><br>
+		Model: {{multiselectModel[2]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[2]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select pre-selection compare by object</h3>
+		<multiselect ng-model="multiselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="true"></multiselect>
+		<br><br>
+		Model: {{multiselectModel[3]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[3]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Single select pre-selection compare by id</h3>
+		<multiselect ng-model="multiselectModel[4]" options="c.name for c in selectOptionsObjects" data-multiple="true" data-compare-by="id"></multiselect>
+		<br><br>
+		Model: {{multiselectModel[4]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[4]"
+    options="c.name for c in selectOptionsObjects"
+    data-multiple="true"
+    data-compare-by="id"
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
 		<h3>app.js:</h3>
 			<pre>
 angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).controller("index", function($scope) {
-    $scope.multiselectModel = ["", []];
-    $scope.multiselectOptions = [
+    $scope.singleselectModel= [
+        "",
+        "Apples",
+        {},
+        {
+            id: 0,
+            name: "Apples"
+        },
+        {
+            id: 0,
+            name: "Apples",
+            bla: "blubb"
+        }
+    ];
+    $scope.multiselectModel = [
+        [],
+        [
+            "Apples",
+            "Peaches"
+        ],
+        [],
+        [
+            {
+                id: 0,
+                name: "Apples"
+            },
+            {
+                id: 2,
+                name: "Peaches"
+            }
+        ],
+        [
+            {
+                id: 0,
+                name: "Apples",
+                bla: "blubb"
+            },
+            {
+                id: 2,
+                name: "Peaches",
+                bla: "blubber"
+            }
+        ]
+    ];
+
+    $scope.selectOptions = [
         "Apples",
         "Bananas",
         "Peaches"
+    ];
+    $scope.selectOptionsObjects = [
+        {
+            id: 0,
+            name: "Apples"
+        },
+        {
+            id: 1,
+            name: "Bananas"
+        },
+        {
+            id: 2,
+            name: "Peaches"
+        }
     ];
 });
 </pre>

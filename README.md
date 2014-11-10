@@ -21,9 +21,10 @@ Add "ui.multiselect" to your modules list. Then you can use it like follows:
 
 ```
 <multiselect
-    ng-model="multiselectModel"
-    options="c for c in multiselectOptions"
-    data-multiple="true">
+    ng-model="selectModel"
+    options="c for c in selectOptions"    // use ... c.name for c in ... for objects
+    data-multiple="true"                  // true for multi-select mode
+    data-compare-by="id">                 // set key to compare objects, otherwise is has to be equal to options
 </multiselect>
 ```
 
