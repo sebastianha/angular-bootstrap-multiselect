@@ -97,7 +97,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				function parseModel() {
 					scope.items.length = 0;
 					var model = parsedResult.source(originalScope);
-					if(!angular.isDefined(model)) {
+					if(!angular.isDefined(model) || model === null) {
 						return;
 					}
 					for(var i = 0; i < model.length; i++) {
