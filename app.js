@@ -13,7 +13,8 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 			id: 0,
 			name: "Apples",
 			bla: "blubb"
-		}
+		},
+		""
 	];
 	$scope.multiselectModel = [
 		[],
@@ -50,6 +51,20 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 		"Apples",
 		"Bananas",
 		"Peaches"
+	];
+	$scope.selectOptionsLong = [
+		"Apples",
+		"Bananas",
+		"Peaches",
+		"Apples2",
+		"Bananas2",
+		"Peaches2",
+		"Apples3",
+		"Bananas3",
+		"Peaches3",
+		"Apples4",
+		"Bananas4",
+		"Peaches4"
 	];
 	$scope.selectOptionsObjects = [
 		{

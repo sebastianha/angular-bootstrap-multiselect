@@ -33,6 +33,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var parsedResult = optionParser.parse(exp);
 				var isMultiple = attrs.multiple ? true : false;
 				var compareByKey = attrs.compareBy;
+				var scrollAfterRows = attrs.scrollAfterRows;
 				var required = false;
 				var scope = originalScope.$new();
 				var changeHandler = attrs.change || angular.noop;
@@ -41,6 +42,11 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				scope.header = "Select";
 				scope.multiple = isMultiple;
 				scope.disabled = false;
+
+				scope.ulStyle = {};
+				if(scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
+					scope.ulStyle = {"max-height": (scrollAfterRows*26+10)+"px", "overflow-y": "scroll"};
+				}
 
 				originalScope.$on("$destroy", function() {
 					scope.$destroy();
@@ -303,7 +309,7 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"  <button type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
 			"    {{header}} <span class=\"caret\"></span>\n" +
 			"  </button>\n" +
-			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\">\n" +
+			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
 			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items\">\n" +
 			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
 			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
