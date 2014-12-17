@@ -45,7 +45,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 
 				scope.ulStyle = {};
 				if(scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
-					scope.ulStyle = {"max-height": (scrollAfterRows*26+10)+"px", "overflow-y": "scroll"};
+					scope.ulStyle = {"max-height": (scrollAfterRows*26+10)+"px", "overflow-y": "auto"};
 				}
 
 				originalScope.$on("$destroy", function() {
