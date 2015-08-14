@@ -211,7 +211,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 							item.checked = false;
 							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
 								item.checked = true;
-							} else if(compareByKey !== undefined && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
+							} else if(compareByKey !== undefined && newVal !== null && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
 								item.checked = true;
 							}
 						});
