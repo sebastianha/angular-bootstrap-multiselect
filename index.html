@@ -86,6 +86,20 @@
 &gt;&lt;/multiselect&gt</pre>
         <br>
 
+        <h3>Single select Long List, scroll after 5 rows, filter after 5 rows</h3>
+        <multiselect ng-model="singleselectModel[5]" options="c for c in selectOptionsLong" data-multiple="false" scroll-after-rows="5" filter-after-rows="5"></multiselect>
+        <br><br>
+        Model: {{singleselectModel[5]}}
+        <br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[5]"
+    options="c for c in selectOptionsLong"
+    data-multiple="false"
+    scroll-after-rows="5"
+    filter-after-rows="5"
+&gt;&lt;/multiselect&gt</pre>
+        <br>
+
 
 
 		<h3>Multi select</h3>

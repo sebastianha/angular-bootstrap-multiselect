@@ -36,6 +36,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var scrollAfterRows = attrs.scrollAfterRows;
 				var required = false;
 				var scope = originalScope.$new();
+				scope.filterAfterRows = attrs.filterAfterRows;
 				var changeHandler = attrs.change || angular.noop;
 
 				scope.items = [];
@@ -45,7 +46,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 
 				scope.ulStyle = {};
 				if(scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
-					scope.ulStyle = {"max-height": (scrollAfterRows*26+10)+"px", "overflow-y": "auto"};
+					scope.ulStyle = {"max-height": (scrollAfterRows*26+14)+"px", "overflow-y": "auto", "overflow-x": "hidden"};
 				}
 
 				originalScope.$on("$destroy", function() {
@@ -270,6 +271,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 
 				scope.toggleSelect = function() {
 					if(element.hasClass("open")) {
+						scope.filter = "";
 						element.removeClass("open");
 						$document.unbind("click", clickHandler);
 					} else {
@@ -310,7 +312,8 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"    {{header}} <span class=\"caret\"></span>\n" +
 			"  </button>\n" +
 			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
-			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items\">\n" +
+			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"Type to filter options\">" +
+			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
 			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
 			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
 			"    </li>\n" +
