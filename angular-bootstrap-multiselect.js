@@ -275,6 +275,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 						element.removeClass("open");
 						$document.unbind("click", clickHandler);
 					} else {
+						scope.filter = "";
 						element.addClass("open");
 						$document.bind("click", clickHandler);
 					}
