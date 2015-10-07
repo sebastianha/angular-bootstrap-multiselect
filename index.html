@@ -100,6 +100,19 @@
 &gt;&lt;/multiselect&gt</pre>
         <br>
 
+        <h3>Single select, very long entries</h3>
+        <multiselect ng-model="singleselectModel[6]" options="c for c in selectOptionsLongEntries" data-multiple="false" max-width="100"></multiselect>
+        <br><br>
+        Model: {{singleselectModel[6]}}
+        <br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[6]"
+    options="c for c in selectOptionsLongEntries"
+    data-multiple="false"
+    max-width="100"
+&gt;&lt;/multiselect&gt</pre>
+        <br>
+
 
 
 		<h3>Multi select</h3>
@@ -179,6 +192,7 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
             name: "Apples",
             bla: "blubb"
         },
+        "",
         ""
     ];
     $scope.multiselectModel = [
@@ -244,6 +258,13 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
             id: 2,
             name: "Peaches"
         }
+    ];
+    $scope.selectOptionsLongEntries = [
+        "ThisIsATestWithVeryLongEntries11111",
+        "ThisIsATestWithVeryLongEntries22222",
+        "ThisIsATestWithVeryLongEntries33333",
+        "ThisIsATestWithVeryLongEntries44444",
+        "ThisIsATestWithVeryLongEntries55555",
     ];
 });
 </pre>

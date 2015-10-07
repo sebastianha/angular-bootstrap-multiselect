@@ -34,6 +34,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var isMultiple = attrs.multiple ? true : false;
 				var compareByKey = attrs.compareBy;
 				var scrollAfterRows = attrs.scrollAfterRows;
+				var maxWidth = attrs.maxWidth;
 				var required = false;
 				var scope = originalScope.$new();
 				scope.filterAfterRows = attrs.filterAfterRows;
@@ -47,6 +48,9 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				scope.ulStyle = {};
 				if(scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
 					scope.ulStyle = {"max-height": (scrollAfterRows*26+14)+"px", "overflow-y": "auto", "overflow-x": "hidden"};
+				}
+				if(maxWidth !== undefined && parseInt(maxWidth).toString() === maxWidth) {
+					scope.maxWidth = {"max-width": maxWidth + "px"};
 				}
 
 				originalScope.$on("$destroy", function() {
@@ -309,8 +313,8 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 angular.module("multiselect.tpl.html", []).run(["$templateCache", function($templateCache) {
 	$templateCache.put("multiselect.tpl.html",
 			"<div class=\"btn-group\">\n" +
-			"  <button type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
-			"    {{header}} <span class=\"caret\"></span>\n" +
+			"  <button title=\"{{header}}\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
+			"    <div ng-style=\"maxWidth\" style=\"padding-right: 13px; overflow: hidden; text-overflow: ellipsis;\">{{header}}</div><span class=\"caret\" style=\"position:absolute;right:10px;top:14px;\"></span>\n" +
 			"  </button>\n" +
 			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
 			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"Type to filter options\">" +

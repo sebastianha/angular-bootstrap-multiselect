@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
 	config.set({
-		basePath     : '',
+		basePath     : "",
 		frameworks   : ["ng-scenario"],
 		files        : [
 			"angular-bootstrap-multiselect.js",
@@ -13,7 +13,7 @@ module.exports = function(config) {
 		],
 		exclude      : [],
 		preprocessors: {},
-		reporters    : ['progress'],
+		reporters    : ["progress"],
 		port         : 8001,
 		colors       : true,
 		logLevel     : config.LOG_INFO,
