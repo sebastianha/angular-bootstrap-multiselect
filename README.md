@@ -27,7 +27,8 @@ Add "ui.multiselect" to your modules list. Then you can use it like follows:
     data-compare-by="id"                  // set key to compare objects, otherwise is has to be equal to options
     scroll-after-rows="5"                 // Show scroll bar after 5 rows
     filter-after-rows="5                  // Show filter input after 5 rows
-    max-width="100">                      // The maximum width of the multiselect dropdown button
+    max-width="100"                       // The maximum width of the multiselect dropdown button
+    tabindex="-1">                        // tabindex setting for dropdown
 </multiselect>
 ```
 
