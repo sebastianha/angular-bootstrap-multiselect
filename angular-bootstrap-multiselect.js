@@ -73,7 +73,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 
 				//watch disabled state
 				scope.$watch(function() {
-					return $parse(attrs.disabled)(originalScope);
+					return $parse(attrs.ngDisabled)(originalScope);
 				}, function(newVal) {
 					scope.disabled = newVal;
 				});
