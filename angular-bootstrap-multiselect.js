@@ -332,7 +332,7 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"{{placeholder}}\">" +
 			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
 			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
-			"        <i class=\"fa\" ng-class=\"{'fa-check': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
+			"        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{i.label}}</a>\n" +
 			"    </li>\n" +
 			"  </ul>\n" +
 			"</div>");
