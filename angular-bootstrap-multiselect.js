@@ -1,3 +1,4 @@
+(function(){
 "use strict";
 
 angular.module("ui.multiselect", ["multiselect.tpl.html"])
@@ -329,3 +330,4 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"  </ul>\n" +
 			"</div>");
 }]);
+})();
