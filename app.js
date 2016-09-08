@@ -45,7 +45,8 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 				name: "Peaches",
 				bla: "blubber"
 			}
-		]
+		],
+		[]
 	];
 
 	$scope.selectOptions = [

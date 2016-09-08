@@ -18,7 +18,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					itemName   : match[3],
 					source     : $parse(match[4]),
 					viewMapper : $parse(match[2] || match[1]),
-					modelMapper: $parse(match[1])
+					modelMapper: $parse(match[2] ? match[1] : match[3])
 				};
 			}
 		};
@@ -120,7 +120,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 						local[parsedResult.itemName] = model[i];
 						scope.items.push({
 							label  : parsedResult.viewMapper(local),
-							model  : model[i],
+							model  : parsedResult.modelMapper(local),
 							checked: false
 						});
 					}
