@@ -101,7 +101,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					//when directive initialize, newVal usually undefined. Also, if model value already set in the controller
 					//for preselected list then we need to mark checked in our scope item. But we don't want to do this every time
 					//model changes. We need to do this only if it is done outside directive scope, from controller, for example.
-					if(angular.isDefined(newVal)) {
+					if(newVal !== oldVal) {
 						markChecked(newVal);
 						scope.$eval(changeHandler);
 					}
