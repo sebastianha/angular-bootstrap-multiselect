@@ -91,6 +91,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				}, function(newVal) {
 					if(angular.isDefined(newVal)) {
 						parseModel();
+						markChecked(modelCtrl.$modelValue);
 					}
 				}, true);
 
