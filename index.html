@@ -7,13 +7,14 @@
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="angular-bootstrap-multiselect.js"></script>
 	<script src="app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
 <body ng-app="angular-bootstrap-multiselect-test" ng-controller="index">
 <div class="container">
 	<div class="row">
 
 		<h3>Single select</h3>
-		<multiselect ng-model="singleselectModel[0]" options="c for c in selectOptions" data-multiple="false"></multiselect>
+		<multiselect ng-model="singleselectModel[0]" options="c for c in selectOptions" data-multiple="false"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[0]}}
 		<br><br>
@@ -25,7 +26,7 @@
 		<br>
 
 		<h3>Single select pre-selection</h3>
-		<multiselect ng-model="singleselectModel[1]" options="c for c in selectOptions" data-multiple="false"></multiselect>
+		<multiselect ng-model="singleselectModel[1]" options="c for c in selectOptions" data-multiple="false" text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[1]}}
 		<br><br>
@@ -37,7 +38,7 @@
 		<br>
 
 		<h3>Single select with objects</h3>
-		<multiselect ng-model="singleselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="false"></multiselect>
+		<multiselect ng-model="singleselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="false"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[2]}}
 		<br><br>
@@ -49,7 +50,7 @@
 		<br>
 
 		<h3>Single select pre-selection compare by object</h3>
-		<multiselect ng-model="singleselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="false"></multiselect>
+		<multiselect ng-model="singleselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="false"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[3]}}
 		<br><br>
@@ -74,7 +75,7 @@
 		<br>
 
         <h3>Single select Long List, scroll after 5 rows</h3>
-        <multiselect ng-model="singleselectModel[5]" options="c for c in selectOptionsLong" data-multiple="false" scroll-after-rows="5"></multiselect>
+        <multiselect ng-model="singleselectModel[5]" options="c for c in selectOptionsLong" data-multiple="false" scroll-after-rows="5"  text="categories" headerclass="fa fa-envira"></multiselect>
         <br><br>
         Model: {{singleselectModel[5]}}
         <br><br>
@@ -87,7 +88,7 @@
         <br>
 
         <h3>Single select Long List, scroll after 5 rows, filter after 5 rows</h3>
-        <multiselect ng-model="singleselectModel[5]" options="c for c in selectOptionsLong" data-multiple="false" scroll-after-rows="5" filter-after-rows="5"></multiselect>
+        <multiselect ng-model="singleselectModel[5]" options="c for c in selectOptionsLong" data-multiple="false" scroll-after-rows="5" filter-after-rows="5"  text="categories" headerclass="fa fa-envira"></multiselect>
         <br><br>
         Model: {{singleselectModel[5]}}
         <br><br>
@@ -101,7 +102,7 @@
         <br>
 
         <h3>Single select, very long entries</h3>
-        <multiselect ng-model="singleselectModel[6]" options="c for c in selectOptionsLongEntries" data-multiple="false" max-width="100"></multiselect>
+        <multiselect ng-model="singleselectModel[6]" options="c for c in selectOptionsLongEntries" data-multiple="false" max-width="100"  text="categories" headerclass="fa fa-envira"></multiselect>
         <br><br>
         Model: {{singleselectModel[6]}}
         <br><br>
@@ -116,7 +117,7 @@
 
 
 		<h3>Multi select</h3>
-		<multiselect ng-model="multiselectModel[0]" options="c for c in selectOptions" data-multiple="true"></multiselect>
+		<multiselect ng-model="multiselectModel[0]" options="c for c in selectOptions" data-multiple="true"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{multiselectModel[0]}}
 		<br><br>
@@ -127,8 +128,10 @@
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
+        ---------------------------------
 		<h3>Multi select pre-selection</h3>
-		<multiselect ng-model="multiselectModel[1]" options="c for c in selectOptions" data-multiple="true"></multiselect>
+		<multiselect ng-model="multiselectModel[1]" options="c for c in selectOptions" data-multiple="true"
+        text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{multiselectModel[1]}}
 		<br><br>
@@ -138,9 +141,10 @@
     data-multiple="true"
 &gt;&lt;/multiselect&gt</pre>
 		<br>
-
+---------------------------------------------------
+        
 		<h3>Multi select with objects</h3>
-		<multiselect ng-model="multiselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="true"></multiselect>
+		<multiselect ng-model="multiselectModel[2]" options="c.name for c in selectOptionsObjects" data-multiple="true"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{multiselectModel[2]}}
 		<br><br>
@@ -152,7 +156,7 @@
 		<br>
 
 		<h3>Multi select pre-selection compare by object</h3>
-		<multiselect ng-model="multiselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="true"></multiselect>
+		<multiselect ng-model="multiselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="true"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{multiselectModel[3]}}
 		<br><br>
@@ -164,7 +168,7 @@
 		<br>
 
 		<h3>Multi select pre-selection compare by id</h3>
-		<multiselect ng-model="multiselectModel[4]" options="c.name for c in selectOptionsObjects" data-multiple="true" data-compare-by="id"></multiselect>
+		<multiselect ng-model="multiselectModel[4]" options="c.name for c in selectOptionsObjects" data-multiple="true" data-compare-by="id"  text="categories" headerclass="fa fa-envira"></multiselect>
 		<br><br>
 		Model: {{multiselectModel[4]}}
 		<br><br>
