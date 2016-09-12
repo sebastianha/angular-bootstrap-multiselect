@@ -176,6 +176,18 @@
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
+        <h3>Multi select value with objects</h3>
+        <multiselect ng-model="multiselectModel[5]" options="c.id as c.name for c in selectOptionsObjects" data-multiple="true"></multiselect>
+        <br><br>
+        Model: {{multiselectModel[5]}}
+        <br><br>
+        <pre>&lt;multiselect
+    ng-model="multiselectModel[5]"
+    options="c.id as c.name for c in selectOptionsObjects"
+    data-multiple="true"
+&gt;&lt;/multiselect&gt</pre>
+        <br>
+
 		<h3>app.js:</h3>
 			<pre>
 angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).controller("index", function($scope) {
@@ -223,7 +235,8 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
                 name: "Peaches",
                 bla: "blubber"
             }
-        ]
+        ],
+        []
     ];
 
     $scope.selectOptions = [

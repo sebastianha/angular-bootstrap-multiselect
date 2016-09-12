@@ -18,7 +18,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					itemName   : match[3],
 					source     : $parse(match[4]),
 					viewMapper : $parse(match[2] || match[1]),
-					modelMapper: $parse(match[1])
+					modelMapper: $parse(match[2] ? match[1] : match[3])
 				};
 			}
 		};
@@ -91,6 +91,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				}, function(newVal) {
 					if(angular.isDefined(newVal)) {
 						parseModel();
+						markChecked(modelCtrl.$modelValue);
 					}
 				}, true);
 
@@ -101,7 +102,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					//when directive initialize, newVal usually undefined. Also, if model value already set in the controller
 					//for preselected list then we need to mark checked in our scope item. But we don't want to do this every time
 					//model changes. We need to do this only if it is done outside directive scope, from controller, for example.
-					if(angular.isDefined(newVal)) {
+					if(newVal !== oldVal) {
 						markChecked(newVal);
 						scope.$eval(changeHandler);
 					}
@@ -120,7 +121,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 						local[parsedResult.itemName] = model[i];
 						scope.items.push({
 							label  : parsedResult.viewMapper(local),
-							model  : model[i],
+							model  : parsedResult.modelMapper(local),
 							checked: false
 						});
 					}
@@ -215,7 +216,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				}
 
 				function markChecked(newVal) {
-					if(!angular.isArray(newVal)) {
+					if(angular.isDefined(newVal) && !angular.isArray(newVal)) {
 						angular.forEach(scope.items, function(item) {
 							item.checked = false;
 							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
