@@ -216,7 +216,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				}
 
 				function markChecked(newVal) {
-					if(!angular.isArray(newVal)) {
+					if(angular.isDefined(newVal) && !angular.isArray(newVal)) {
 						angular.forEach(scope.items, function(item) {
 							item.checked = false;
 							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
