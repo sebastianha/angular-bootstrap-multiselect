@@ -112,6 +112,20 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					modelCtrl.$setValidity("required", scope.valid());
 				}, true);
 
+				//watch placeholder text
+				scope.$watch(function() {
+					return attrs.msPlaceholder;
+				}, function() {
+					getPlaceholderText();
+				});
+
+				//watch header text
+				scope.$watch(function() {
+					return attrs.msHeader;
+				}, function() {
+					getHeaderText();
+				});
+
 				function parseModel() {
 					scope.items.length = 0;
 					var model = parsedResult.source(originalScope);
