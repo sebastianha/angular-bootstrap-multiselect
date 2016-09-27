@@ -1,354 +1,362 @@
-(function(){
-"use strict";
+(function () {
+  "use strict";
 
-angular.module("ui.multiselect", ["multiselect.tpl.html"])
-	//from bootstrap-ui typeahead parser
-	.factory("optionParser", ["$parse", function($parse) {
-		//                      00000111000000000000022200000000000000003333333333333330000000000044000
-		var TYPEAHEAD_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?\s+for\s+(?:([\$\w][\$\w\d]*))\s+in\s+(.*)$/;
+  angular.module("ui.multiselect", ["multiselect.tpl.html"])
+    //from bootstrap-ui typeahead parser
+    .factory("optionParser", ["$parse", function ($parse) {
+      //                      00000111000000000000022200000000000000003333333333333330000000000044000
+      var TYPEAHEAD_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?\s+for\s+(?:([\$\w][\$\w\d]*))\s+in\s+(.*)$/;
 
-		return {
-			parse: function(input) {
+      return {
+        parse: function (input) {
 
-				var match = input.match(TYPEAHEAD_REGEXP);
-				if(!match) {
-					throw new Error("Expected typeahead specification in form of '_modelValue_ (as _label_)? for _item_ in _collection_'" + " but got '" + input + "'.");
-				}
+          var match = input.match(TYPEAHEAD_REGEXP);
+          if (!match) {
+            throw new Error("Expected typeahead specification in form of '_modelValue_ (as _label_)? for _item_ in _collection_'" + " but got '" + input + "'.");
+          }
 
-				return {
-					itemName   : match[3],
-					source     : $parse(match[4]),
-					viewMapper : $parse(match[2] || match[1]),
-					modelMapper: $parse(match[1])
-				};
-			}
-		};
-	}])
-	.directive("multiselect", ["$parse", "$document", "$compile", "$interpolate", "optionParser", function($parse, $document, $compile, $interpolate, optionParser) {
-		return {
-			restrict: "E",
-			require : "ngModel",
-			link    : function(originalScope, element, attrs, modelCtrl) {
+          return {
+            itemName: match[3],
+            source: $parse(match[4]),
+            viewMapper: $parse(match[2] || match[1]),
+            modelMapper: $parse(match[1])
+          };
+        }
+      };
+    }])
+    .directive("multiselect", ["$parse", "$document", "$compile", "$interpolate", "optionParser", function ($parse, $document, $compile, $interpolate, optionParser) {
+      return {
+        restrict: "E",
+        require: "ngModel",
+        link: function (originalScope, element, attrs, modelCtrl) {
 
-				var exp = attrs.options;
-				var parsedResult = optionParser.parse(exp);
-				var isMultiple = attrs.multiple ? true : false;
-				var compareByKey = attrs.compareBy;
-				var scrollAfterRows = attrs.scrollAfterRows;
-				var tabindex = attrs.tabindex;
-				var maxWidth = attrs.maxWidth;
-				var required = false;
-				var scope = originalScope.$new();
-				scope.filterAfterRows = attrs.filterAfterRows;
-				var changeHandler = attrs.change || angular.noop;
+          var exp = attrs.options;
+          var parsedResult = optionParser.parse(exp);
+          var isMultiple = attrs.multiple ? true : false;
+          var compareByKey = attrs.compareBy;
+          var scrollAfterRows = attrs.scrollAfterRows;
+          var tabindex = attrs.tabindex;
+          var maxWidth = attrs.maxWidth;
+          var required = false;
+          var scope = originalScope.$new();
+          scope.filterAfterRows = attrs.filterAfterRows;
+          var changeHandler = attrs.change || angular.noop;
 
-				scope.items = [];
-				scope.header = "Select";
-				scope.placeholder = "Type to filter options";
-				scope.multiple = isMultiple;
-				scope.disabled = false;
+          scope.items = [];
+          scope.header = "Select";
+          scope.placeholder = "Type to filter options";
+          scope.multiple = isMultiple;
+          scope.disabled = false;
 
-				scope.ulStyle = {};
-				if(scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
-					scope.ulStyle = {"max-height": (scrollAfterRows*26+14)+"px", "overflow-y": "auto", "overflow-x": "hidden"};
-				}
-				if(tabindex !== undefined && parseInt(tabindex).toString() === tabindex) {
-					scope.tabindex = tabindex;
-				}
-				if(maxWidth !== undefined && parseInt(maxWidth).toString() === maxWidth) {
-					scope.maxWidth = {"max-width": maxWidth + "px"};
-				}
+          scope.ulStyle = {};
+          if (scrollAfterRows !== undefined && parseInt(scrollAfterRows).toString() === scrollAfterRows) {
+            scope.ulStyle = {
+              "max-height": (scrollAfterRows * 26 + 14) + "px",
+              "overflow-y": "auto",
+              "overflow-x": "hidden"
+            };
+          }
+          if (tabindex !== undefined && parseInt(tabindex).toString() === tabindex) {
+            scope.tabindex = tabindex;
+          }
+          if (maxWidth !== undefined && parseInt(maxWidth).toString() === maxWidth) {
+            scope.maxWidth = {"max-width": maxWidth + "px"};
+          }
 
-				originalScope.$on("$destroy", function() {
-					scope.$destroy();
-				});
+          originalScope.$on("$destroy", function () {
+            scope.$destroy();
+          });
 
-				var popUpEl = angular.element("<multiselect-popup></multiselect-popup>");
+          var popUpEl = angular.element("<multiselect-popup></multiselect-popup>");
 
-				//required validator
-				if(attrs.required || attrs.ngRequired) {
-					required = true;
-				}
-				attrs.$observe("required", function(newVal) {
-					required = newVal;
-				});
+          //required validator
+          if (attrs.required || attrs.ngRequired) {
+            required = true;
+          }
+          attrs.$observe("required", function (newVal) {
+            required = newVal;
+          });
 
-				//watch disabled state
-				scope.$watch(function() {
-					return $parse(attrs.ngDisabled)(originalScope);
-				}, function(newVal) {
-					scope.disabled = newVal;
-				});
+          //watch disabled state
+          scope.$watch(function () {
+            return $parse(attrs.ngDisabled)(originalScope);
+          }, function (newVal) {
+            scope.disabled = newVal;
+          });
 
-				//watch single/multiple state for dynamically change single to multiple
-				scope.$watch(function() {
-					return $parse(attrs.multiple)(originalScope);
-				}, function(newVal) {
-					isMultiple = newVal || false;
-				});
+          //watch single/multiple state for dynamically change single to multiple
+          scope.$watch(function () {
+            return $parse(attrs.multiple)(originalScope);
+          }, function (newVal) {
+            isMultiple = newVal || false;
+          });
 
-				//watch option changes for options that are populated dynamically
-				scope.$watch(function() {
-					return parsedResult.source(originalScope);
-				}, function(newVal) {
-					if(angular.isDefined(newVal)) {
-						parseModel();
-					}
-				}, true);
+          //watch option changes for options that are populated dynamically
+          scope.$watch(function () {
+            return parsedResult.source(originalScope);
+          }, function (newVal) {
+            if (angular.isDefined(newVal)) {
+              parseModel();
+            }
+          }, true);
 
-				//watch model change
-				scope.$watch(function() {
-					return modelCtrl.$modelValue;
-				}, function(newVal, oldVal) {
-					//when directive initialize, newVal usually undefined. Also, if model value already set in the controller
-					//for preselected list then we need to mark checked in our scope item. But we don't want to do this every time
-					//model changes. We need to do this only if it is done outside directive scope, from controller, for example.
-					if(angular.isDefined(newVal)) {
-						markChecked(newVal);
-						scope.$eval(changeHandler);
-					}
-					getHeaderText();
-					getPlaceholderText();
-					modelCtrl.$setValidity("required", scope.valid());
-				}, true);
+          //watch model change
+          scope.$watch(function () {
+            return modelCtrl.$modelValue;
+          }, function (newVal, oldVal) {
+            //when directive initialize, newVal usually undefined. Also, if model value already set in the controller
+            //for preselected list then we need to mark checked in our scope item. But we don't want to do this every time
+            //model changes. We need to do this only if it is done outside directive scope, from controller, for example.
+            if (angular.isDefined(newVal)) {
+              markChecked(newVal);
+              scope.$eval(changeHandler);
+            }
+            getHeaderText();
+            getPlaceholderText();
+            modelCtrl.$setValidity("required", scope.valid());
+          }, true);
 
-				//watch placeholder text
-				scope.$watch(function() {
-					return attrs.msPlaceholder;
-				}, function() {
-					getPlaceholderText();
-				});
+          //watch placeholder text
+          scope.$watch(function () {
+            return attrs.msPlaceholder;
+          }, function () {
+            getPlaceholderText();
+          });
 
-				//watch header text
-				scope.$watch(function() {
-					return attrs.msHeader;
-				}, function() {
-					getHeaderText();
-				});
+          //watch header text
+          scope.$watch(function () {
+            return attrs.msHeader;
+          }, function () {
+            getHeaderText();
+          });
 
-				function parseModel() {
-					scope.items.length = 0;
-					var model = parsedResult.source(originalScope);
-					if(!angular.isDefined(model) || model === null) {
-						return;
-					}
-					for(var i = 0; i < model.length; i++) {
-						var local = {};
-						local[parsedResult.itemName] = model[i];
-						scope.items.push({
-							label  : parsedResult.viewMapper(local),
-							model  : model[i],
-							checked: false
-						});
-					}
-				}
+          function parseModel() {
+            scope.items.length = 0;
+            var model = parsedResult.source(originalScope);
+            if (!angular.isDefined(model) || model === null) {
+              return;
+            }
+            for (var i = 0; i < model.length; i++) {
+              var local = {};
+              local[parsedResult.itemName] = model[i];
+              scope.items.push({
+                label: parsedResult.viewMapper(local),
+                model: model[i],
+                checked: false
+              });
+            }
+          }
 
-				parseModel();
+          parseModel();
 
-				element.append($compile(popUpEl)(scope));
-				
-				function getPlaceholderText() {
-					scope.placeholder = attrs.msPlaceholder || "Type to filter options";
-					return scope.placeholder;
-				}
+          element.append($compile(popUpEl)(scope));
 
-				function getHeaderText() {
-					if(isEmpty(modelCtrl.$modelValue)) {
-						scope.header = attrs.msHeader || "Select";
-						return scope.header;
-					}
+          function getPlaceholderText() {
+            scope.placeholder = attrs.msPlaceholder || "Type to filter options";
+            return scope.placeholder;
+          }
 
-					if(isMultiple) {
-						if(attrs.msSelected) {
-							scope.header = $interpolate(attrs.msSelected)(scope);
-						} else {
-							scope.header = modelCtrl.$modelValue.length + " " + "selected";
-						}
+          function getHeaderText() {
+            if (isEmpty(modelCtrl.$modelValue)) {
+              scope.header = attrs.msHeader || "Select";
+              return scope.header;
+            }
 
-					} else {
-						var local = {};
-						local[parsedResult.itemName] = modelCtrl.$modelValue;
-						scope.header = parsedResult.viewMapper(local);
-					}
-				}
+            if (isMultiple) {
+              if (attrs.msSelected) {
+                scope.header = $interpolate(attrs.msSelected)(scope);
+              } else {
+                scope.header = modelCtrl.$modelValue.length + " " + "selected";
+              }
 
-				function isEmpty(obj) {
-					if(obj === true || obj === false) {
-						return false;
-					}
-					if(!obj) {
-						return true;
-					}
-					if(obj.length && obj.length > 0) {
-						return false;
-					}
-					for(var prop in obj) {
-						if(obj[prop]) {
-							return false;
-						}
-					}
-					if(compareByKey !== undefined && obj[compareByKey] !== undefined) {
-						return false;
-					}
+            } else {
+              var local = {};
+              local[parsedResult.itemName] = modelCtrl.$modelValue;
+              scope.header = parsedResult.viewMapper(local);
+            }
+          }
 
-					return true;
-				}
+          function isEmpty(obj) {
+            if (obj === true || obj === false) {
+              return false;
+            }
+            if (!obj) {
+              return true;
+            }
+            if (obj.length && obj.length > 0) {
+              return false;
+            }
+            for (var prop in obj) {
+              if (obj[prop]) {
+                return false;
+              }
+            }
+            if (compareByKey !== undefined && obj[compareByKey] !== undefined) {
+              return false;
+            }
 
-				scope.valid = function validModel() {
-					if(!required) {
-						return true;
-					}
-					var value = modelCtrl.$modelValue;
-					return (angular.isArray(value) && value.length > 0) || (!angular.isArray(value) && value !== null);
-				};
+            return true;
+          }
 
-				function selectSingle(item) {
-					if(!item.checked) {
-						scope.uncheckAll();
-						item.checked = !item.checked;
-					}
-					setModelValue(false);
-				}
+          scope.valid = function validModel() {
+            if (!required) {
+              return true;
+            }
+            var value = modelCtrl.$modelValue;
+            return (angular.isArray(value) && value.length > 0) || (!angular.isArray(value) && value !== null);
+          };
 
-				function selectMultiple(item) {
-					item.checked = !item.checked;
-					setModelValue(true);
-				}
+          function selectSingle(item) {
+            if (!item.checked) {
+              scope.uncheckAll();
+              item.checked = !item.checked;
+            }
+            setModelValue(false);
+          }
 
-				function setModelValue(isMultiple) {
-					var value;
+          function selectMultiple(item) {
+            item.checked = !item.checked;
+            setModelValue(true);
+          }
 
-					if(isMultiple) {
-						value = [];
-						angular.forEach(scope.items, function(item) {
-							if(item.checked) {
-								value.push(item.model);
-							}
-						});
-					} else {
-						angular.forEach(scope.items, function(item) {
-							if(item.checked) {
-								value = item.model;
-								return false;
-							}
-						});
-					}
-					modelCtrl.$setViewValue(value);
-				}
+          function setModelValue(isMultiple) {
+            var value;
 
-				function markChecked(newVal) {
-					if(!angular.isArray(newVal)) {
-						angular.forEach(scope.items, function(item) {
-							item.checked = false;
-							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
-								item.checked = true;
-							} else if(compareByKey !== undefined && newVal !== null && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
-								item.checked = true;
-							}
-						});
-					} else {
-						angular.forEach(scope.items, function(item) {
-							item.checked = false;
-							angular.forEach(newVal, function(i) {
-								if(compareByKey === undefined && angular.equals(item.model, i)) {
-									item.checked = true;
-								} else if(compareByKey !== undefined && angular.equals(item.model[compareByKey], i[compareByKey])) {
-									item.checked = true;
-								}
-							});
-						});
-					}
-				}
+            if (isMultiple) {
+              value = [];
+              angular.forEach(scope.items, function (item) {
+                if (item.checked) {
+                  value.push(item.model);
+                }
+              });
+            } else {
+              angular.forEach(scope.items, function (item) {
+                if (item.checked) {
+                  value = item.model;
+                  return false;
+                }
+              });
+            }
+            modelCtrl.$setViewValue(value);
+          }
 
-				scope.checkAll = function() {
-					if(!isMultiple) {
-						return;
-					}
-					angular.forEach(scope.items, function(item) {
-						item.checked = true;
-					});
-					setModelValue(true);
-				};
+          function markChecked(newVal) {
+            if (!angular.isArray(newVal)) {
+              angular.forEach(scope.items, function (item) {
+                item.checked = false;
+                if (compareByKey === undefined && angular.equals(item.model, newVal)) {
+                  item.checked = true;
+                } else if (compareByKey !== undefined && newVal !== null && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
+                  item.checked = true;
+                }
+              });
+            } else {
+              angular.forEach(scope.items, function (item) {
+                item.checked = false;
+                angular.forEach(newVal, function (i) {
+                  if (compareByKey === undefined && angular.equals(item.model, i)) {
+                    item.checked = true;
+                  } else if (compareByKey !== undefined && angular.equals(item.model[compareByKey], i[compareByKey])) {
+                    item.checked = true;
+                  }
+                });
+              });
+            }
+          }
 
-				scope.uncheckAll = function() {
-					angular.forEach(scope.items, function(item) {
-						item.checked = false;
-					});
-					setModelValue(true);
-				};
+          scope.checkAll = function () {
+            if (!isMultiple) {
+              return;
+            }
+            angular.forEach(scope.items, function (item) {
+              item.checked = true;
+            });
+            setModelValue(true);
+          };
 
-				scope.select = function(event, item) {
-					if(isMultiple === false) {
-						selectSingle(item);
-						scope.toggleSelect();
-					} else {
-						event.stopPropagation();
-						selectMultiple(item);
-					}
-				};
-			}
-		};
-	}])
-	.directive("multiselectPopup", ["$document", function($document) {
-		return {
-			restrict   : "E",
-			scope      : false,
-			replace    : true,
-			templateUrl: "multiselect.tpl.html",
-			link       : function(scope, element, attrs) {
+          scope.uncheckAll = function () {
+            angular.forEach(scope.items, function (item) {
+              item.checked = false;
+            });
+            setModelValue(true);
+          };
 
-				scope.isVisible = false;
+          scope.select = function (event, item) {
+            if (isMultiple === false) {
+              selectSingle(item);
+              scope.toggleSelect();
+            } else {
+              event.stopPropagation();
+              selectMultiple(item);
+            }
+          };
+        }
+      };
+    }])
+    .directive("multiselectPopup", ["$document", function ($document) {
+      return {
+        restrict: "E",
+        scope: false,
+        replace: true,
+        templateUrl: "multiselect.tpl.html",
+        link: function (scope, element, attrs) {
 
-				scope.toggleSelect = function() {
-					if(element.hasClass("open")) {
-						scope.filter = "";
-						element.removeClass("open");
-						$document.unbind("click", clickHandler);
-					} else {
-						scope.filter = "";
-						element.addClass("open");
-						$document.bind("click", clickHandler);
-					}
-				};
+          scope.isVisible = false;
 
-				//				$("ul.dropdown-menu").on("click", "[data-stopPropagation]", function(e) {
-				//					e.stopPropagation();
-				//				});
+          scope.toggleSelect = function () {
+            if (element.hasClass("open")) {
+              scope.filter = "";
+              element.removeClass("open");
+              $document.unbind("click", clickHandler);
+            } else {
+              scope.filter = "";
+              element.addClass("open");
+              $document.bind("click", clickHandler);
+            }
+          };
 
-				function clickHandler(event) {
-					if(elementMatchesAnyInArray(event.target, element.find(event.target.tagName))) {
-						return;
-					}
-					element.removeClass("open");
-					$document.unbind("click", clickHandler);
-					scope.$apply();
-				}
+          //				$("ul.dropdown-menu").on("click", "[data-stopPropagation]", function(e) {
+          //					e.stopPropagation();
+          //				});
 
-				var elementMatchesAnyInArray = function(element, elementArray) {
-					for(var i = 0; i < elementArray.length; i++) {
-						if(element === elementArray[i]) {
-							return true;
-						}
-					}
-					return false;
-				};
-			}
-		};
-	}]);
+          function clickHandler(event) {
+            if (elementMatchesAnyInArray(event.target, element.find(event.target.tagName))) {
+              return;
+            }
+            element.removeClass("open");
+            $document.unbind("click", clickHandler);
+            scope.$apply();
+          }
 
-angular.module("multiselect.tpl.html", []).run(["$templateCache", function($templateCache) {
-	$templateCache.put("multiselect.tpl.html",
-			"<div class=\"btn-group\">\n" +
-			"  <button tabindex=\"{{tabindex}}\" title=\"{{header}}\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
-			"    <div ng-style=\"maxWidth\" style=\"padding-right: 13px; overflow: hidden; text-overflow: ellipsis;\">{{header}}</div><span class=\"caret\" style=\"position:absolute;right:10px;top:14px;\"></span>\n" +
-			"  </button>\n" +
-			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
-			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"{{placeholder}}\">" +
-			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
-			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
-			"        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{i.label}}</a>\n" +
-			"    </li>\n" +
-			"  </ul>\n" +
-			"</div>");
-}]);
+          var elementMatchesAnyInArray = function (element, elementArray) {
+            for (var i = 0; i < elementArray.length; i++) {
+              if (element === elementArray[i]) {
+                return true;
+              }
+            }
+            return false;
+          };
+        }
+      };
+    }]);
+
+  angular.module("multiselect.tpl.html", []).run(["$templateCache", function ($templateCache) {
+    $templateCache.put("multiselect.tpl.html",
+      "<div class=\"btn-group\">\n" +
+      "  <button tabindex=\"{{tabindex}}\" title=\"{{header}}\" type=\"button\" class=\"btn btn-default dropdown-toggle\" ng-click=\"toggleSelect()\" ng-disabled=\"disabled\" ng-class=\"{'error': !valid()}\">\n" +
+      "    <div ng-style=\"maxWidth\" style=\"padding-right: 13px; overflow: hidden; text-overflow: ellipsis;\">{{header}}</div><span class=\"caret\" style=\"position:absolute;right:10px;top:14px;\"></span>\n" +
+      "  </button>\n" +
+      "  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
+      "    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"{{placeholder}}\">" +
+      "    <li data-ng-if=\"items.length > 0\" data-stopPropagation=\"true\"\n" +
+      "      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
+      "        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{header}}</a>\n" +
+      "    </li>\n" +
+      "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
+      "      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
+      "        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{i.label}}</a>\n" +
+      "    </li>\n" +
+      "  </ul>\n" +
+      "</div>");
+  }]);
 })();
