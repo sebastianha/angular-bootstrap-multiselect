@@ -198,6 +198,14 @@
             return true;
           }
 
+          scope.modelValue = function () {
+            return modelCtrl.$modelValue;
+          };
+
+          scope.getAttrHeaderText = function () {
+            return attrs.msHeader || "Select";
+          };
+
           scope.valid = function validModel() {
             if (!required) {
               return true;
@@ -348,9 +356,9 @@
       "  </button>\n" +
       "  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
       "    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"{{placeholder}}\">" +
-      "    <li data-ng-if=\"items.length > 0\" data-stopPropagation=\"true\"\n" +
-      "      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
-      "        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{header}}</a>\n" +
+      "    <li data-ng-if=\"modelValue().length > 0\" data-stopPropagation=\"true\"\n" +
+      "      <a ng-click=\"uncheckAll()\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
+      "        <i class=\"fa\" ng-class=\"{'fa-check-square-o': i.checked, 'fa-square-o': !i.checked}\"></i> {{getAttrHeaderText()}}</a>\n" +
       "    </li>\n" +
       "    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
       "      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
