@@ -118,10 +118,27 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					for(var i = 0; i < model.length; i++) {
 						var local = {};
 						local[parsedResult.itemName] = model[i];
+
+						// calculate checked status of the option
+						var id = model[i].id;
+						var checked = false;
+						var modelValue = modelCtrl.$modelValue;
+						if (modelValue) {
+							if (angular.isArray(modelValue)) {
+								for (var j = 0; j < modelValue.length; j++)
+									if (modelValue[j].id == id) {
+										checked = true;
+										break;
+									}
+							} else {
+								checked = modelValue.id == id;
+							}
+						}
+
 						scope.items.push({
 							label  : parsedResult.viewMapper(local),
 							model  : model[i],
-							checked: false
+							checked: checked
 						});
 					}
 				}
