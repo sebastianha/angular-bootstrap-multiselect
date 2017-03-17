@@ -33,6 +33,8 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var parsedResult = optionParser.parse(exp);
 				var isMultiple = attrs.multiple ? true : false;
 				var compareByKey = attrs.compareBy;
+				var headerKey = attrs.headerKey;
+				var dividerKey = attrs.dividerKey;
 				var scrollAfterRows = attrs.scrollAfterRows;
 				var tabindex = attrs.tabindex;
 				var maxWidth = attrs.maxWidth;
@@ -121,7 +123,9 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 						scope.items.push({
 							label  : parsedResult.viewMapper(local),
 							model  : model[i],
-							checked: false
+							checked: false,
+							header : model[i][headerKey],
+							divider : model[i][dividerKey]
 						});
 					}
 				}
@@ -220,7 +224,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 							item.checked = false;
 							if(compareByKey === undefined && angular.equals(item.model, newVal)) {
 								item.checked = true;
-							} else if(compareByKey !== undefined && newVal !== null && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
+							} else if(compareByKey !== undefined && newVal !== null && item.model[compareByKey] !== undefined && angular.equals(item.model[compareByKey], newVal[compareByKey])) {
 								item.checked = true;
 							}
 						});
@@ -230,7 +234,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 							angular.forEach(newVal, function(i) {
 								if(compareByKey === undefined && angular.equals(item.model, i)) {
 									item.checked = true;
-								} else if(compareByKey !== undefined && angular.equals(item.model[compareByKey], i[compareByKey])) {
+								} else if(compareByKey !== undefined && item.model[compareByKey] !== undefined && angular.equals(item.model[compareByKey], i[compareByKey])) {
 									item.checked = true;
 								}
 							});
@@ -322,9 +326,11 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"  </button>\n" +
 			"  <ul class=\"dropdown-menu\" style=\"margin-bottom:30px;padding-left:5px;padding-right:5px;\" ng-style=\"ulStyle\">\n" +
 			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"padding: 0px 3px;margin-right: 15px; margin-bottom: 4px;\" placeholder=\"Type to filter options\">" +
-			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\">\n" +
-			"      <a ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
-			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}</a>\n" +
+			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter\" ng-class=\"{'dropdown-header': i.header, 'divider': i.divider}\">\n" +
+			"      <a ng-if=\"!i.header && !i.divider\" ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
+			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}" +
+			"      </a>\n" +
+			"      <span ng-if=\"i.header\">{{i.label}}</span>" +
 			"    </li>\n" +
 			"  </ul>\n" +
 			"</div>");

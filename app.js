@@ -15,7 +15,9 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 			bla: "blubb"
 		},
 		"",
-		""
+		"",
+		{},
+		{}
 	];
 	$scope.multiselectModel = [
 		[],
@@ -86,6 +88,33 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 		"ThisIsATestWithVeryLongEntries22222",
 		"ThisIsATestWithVeryLongEntries33333",
 		"ThisIsATestWithVeryLongEntries44444",
-		"ThisIsATestWithVeryLongEntries55555",
+		"ThisIsATestWithVeryLongEntries55555"
+	];
+	$scope.selectOptionsObjectsHeader = [
+		{
+			name: "Fruits",
+			header: true
+		},
+		{
+			id: 1,
+			name: "Bananas"
+		},
+		{
+			id: 2,
+			name: "Peaches"
+		}
+	];
+	$scope.selectOptionsObjectsDivider = [
+		{
+			id: 1,
+			name: "Bananas"
+		},
+		{
+			divider: true
+		},
+		{
+			id: 2,
+			name: "Peaches"
+		}
 	];
 });

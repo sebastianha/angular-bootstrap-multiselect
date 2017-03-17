@@ -176,6 +176,30 @@
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
+		<h3>Multi select headers</h3>
+		<multiselect ng-model="singleselectModel[7]" options="c.name for c in selectOptionsObjectsHeader" data-header-key="header"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[7]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[7]"
+    options="c.name for c in selectOptionsObjectsHeader"
+    data-header-key="header"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
+		<h3>Multi select dividers</h3>
+		<multiselect ng-model="singleselectModel[8]" options="c.name for c in selectOptionsObjectsDivider" data-divider-key="divider"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[8]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="multiselectModel[7]"
+    options="c.name for c in selectOptionsObjectsDivider"
+    data-divider-key="divider"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
 		<h3>app.js:</h3>
 			<pre>
 angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).controller("index", function($scope) {
@@ -193,7 +217,9 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
             bla: "blubb"
         },
         "",
-        ""
+        "",
+		{},
+		{}
     ];
     $scope.multiselectModel = [
         [],
@@ -264,8 +290,35 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
         "ThisIsATestWithVeryLongEntries22222",
         "ThisIsATestWithVeryLongEntries33333",
         "ThisIsATestWithVeryLongEntries44444",
-        "ThisIsATestWithVeryLongEntries55555",
+        "ThisIsATestWithVeryLongEntries55555"
     ];
+	$scope.selectOptionsObjectsHeader = [
+		{
+			name: "Fruits",
+			header: true
+		},
+		{
+			id: 1,
+			name: "Bananas"
+		},
+		{
+			id: 2,
+			name: "Peaches"
+		}
+	];
+	$scope.selectOptionsObjectsDivider = [
+		{
+			id: 1,
+			name: "Bananas"
+		},
+		{
+			divider: true
+		},
+		{
+			id: 2,
+			name: "Peaches"
+		}
+	];
 });
 </pre>
 

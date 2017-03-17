@@ -25,6 +25,8 @@ Add "ui.multiselect" to your modules list. Then you can use it like follows:
     options="c for c in selectOptions"    // use ... c.name for c in ... for objects
     data-multiple="true"                  // true for multi-select mode
     data-compare-by="id"                  // set key to compare objects, otherwise is has to be equal to options
+    data-header-key="header"              // Key which marks headers in the objects list
+    data-divider-key="divider"            // Key which marks dividers in the objects list
     scroll-after-rows="5"                 // Show scroll bar after 5 rows
     filter-after-rows="5                  // Show filter input after 5 rows
     max-width="100"                       // The maximum width of the multiselect dropdown button
@@ -48,7 +50,7 @@ $ karma start
 
 ### License
 
-Copyright (c) 2015 Sebastian Hammerl, Getslash GmbH
+Copyright (c) 2017 Sebastian Hammerl, Getslash GmbH
 
 Copyright (c) 2014 Amitava Saha
 
