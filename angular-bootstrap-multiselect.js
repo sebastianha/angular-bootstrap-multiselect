@@ -107,7 +107,7 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 					}
 					getHeaderText();
 					modelCtrl.$setValidity("required", scope.valid());
-				}, true);
+				});
 
 				function parseModel() {
 					scope.items.length = 0;
