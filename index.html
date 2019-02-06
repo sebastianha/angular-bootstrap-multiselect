@@ -177,25 +177,27 @@
 		<br>
 
 		<h3>Multi select headers</h3>
-		<multiselect ng-model="singleselectModel[7]" options="c.name for c in selectOptionsObjectsHeader" data-header-key="header"></multiselect>
+		<multiselect ng-model="singleselectModel[7]" options="c.name for c in selectOptionsObjectsHeader" data-multiple="true" data-header-key="header"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[7]}}
 		<br><br>
 		<pre>&lt;multiselect
     ng-model="multiselectModel[7]"
     options="c.name for c in selectOptionsObjectsHeader"
+    data-multiple="true"
     data-header-key="header"
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
 		<h3>Multi select dividers</h3>
-		<multiselect ng-model="singleselectModel[8]" options="c.name for c in selectOptionsObjectsDivider" data-divider-key="divider"></multiselect>
+		<multiselect ng-model="singleselectModel[8]" options="c.name for c in selectOptionsObjectsDivider" data-multiple="true" data-divider-key="divider"></multiselect>
 		<br><br>
 		Model: {{singleselectModel[8]}}
 		<br><br>
 		<pre>&lt;multiselect
     ng-model="multiselectModel[7]"
     options="c.name for c in selectOptionsObjectsDivider"
+    data-multiple="true"
     data-divider-key="divider"
 &gt;&lt;/multiselect&gt</pre>
 		<br>
