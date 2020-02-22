@@ -17,6 +17,7 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 		"",
 		"",
 		{},
+		{},
 		{}
 	];
 	$scope.multiselectModel = [
@@ -77,6 +78,28 @@ angular.module("angular-bootstrap-multiselect-test", ["ui.multiselect"]).control
 		{
 			id: 1,
 			name: "Bananas"
+		},
+		{
+			id: 2,
+			name: "Peaches"
+		}
+	];
+	$scope.selectOptionsObjectsStyled = [
+		{
+			id: 0,
+			name: "Apples",
+			style: {
+				"color": "white",
+				"background-color": "blue"
+			}
+		},
+		{
+			id: 1,
+			name: "Bananas",
+			style: {
+				"color": "white",
+				"background-color": "red"
+			}
 		},
 		{
 			id: 2,

@@ -33,8 +33,9 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 				var parsedResult = optionParser.parse(exp);
 				var isMultiple = attrs.multiple ? true : false;
 				var compareByKey = attrs.compareBy;
-				var headerKey = attrs.headerKey;
-				var dividerKey = attrs.dividerKey;
+				var headerKey = attrs.headerKey || "header";
+				var dividerKey = attrs.dividerKey || "divider";
+				var styleKey = attrs.styleKey || "style";
 				var scrollAfterRows = attrs.scrollAfterRows;
 				var tabindex = attrs.tabindex;
 				var maxWidth = attrs.maxWidth;
@@ -125,7 +126,8 @@ angular.module("ui.multiselect", ["multiselect.tpl.html"])
 							model  : model[i],
 							checked: false,
 							header : model[i][headerKey],
-							divider : model[i][dividerKey]
+							divider : model[i][dividerKey],
+							style : model[i][styleKey]
 						});
 					}
 				}
@@ -339,7 +341,7 @@ angular.module("multiselect.tpl.html", []).run(["$templateCache", function($temp
 			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filter\" style=\"width: 150px; padding: 0px 3px;margin-right: 35px; margin-bottom: 4px;\" placeholder=\"Type to filter options\">" +
 			"    <input ng-show=\"items.length > filterAfterRows\" ng-model=\"filterActive\" type=\"checkbox\" style=\"position: absolute; left: 160px; top: 7px;\" title=\"Show only selected items\">" +
 			"    <li data-stopPropagation=\"true\" ng-repeat=\"i in items | filter:filter | filter:activeFilter\" ng-class=\"{'dropdown-header': i.header, 'divider': i.divider}\">\n" +
-			"      <a ng-if=\"!i.header && !i.divider\" ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\">\n" +
+			"      <a ng-if=\"!i.header && !i.divider\" ng-click=\"select($event, i)\" style=\"padding:3px 10px;cursor:pointer;\" ng-style=\"i.style\">\n" +
 			"        <i class=\"glyphicon\" ng-class=\"{'glyphicon-ok': i.checked, 'empty': !i.checked}\"></i> {{i.label}}" +
 			"      </a>\n" +
 			"      <span ng-if=\"i.header\">{{i.label}}</span>" +

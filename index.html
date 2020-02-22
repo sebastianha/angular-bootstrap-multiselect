@@ -48,6 +48,18 @@
 &gt;&lt;/multiselect&gt</pre>
 		<br>
 
+		<h3>Single select with styled objects</h3>
+		<multiselect ng-model="singleselectModel[9]" options="c.name for c in selectOptionsObjectsStyled" data-multiple="false"></multiselect>
+		<br><br>
+		Model: {{singleselectModel[9]}}
+		<br><br>
+		<pre>&lt;multiselect
+    ng-model="singleselectModel[9]"
+    options="c.name for c in selectOptionsObjectsStyled"
+    data-multiple="false"
+&gt;&lt;/multiselect&gt</pre>
+		<br>
+
 		<h3>Single select pre-selection compare by object</h3>
 		<multiselect ng-model="singleselectModel[3]" options="c.name for c in selectOptionsObjects" data-multiple="false"></multiselect>
 		<br><br>
